@@ -1,5 +1,6 @@
 #learner_id  country   in_course   unit   avg_score    completion   inv_rate
 import sqlite3
+import pie_chart as pie
 
 conn = sqlite3.connect('PearsonData')
 cur = conn.cursor() 
@@ -37,3 +38,5 @@ people.append(others)
 
 for x in range(len(country)):
     print(country[x], people[x])
+
+pie.pie_chart(tuple(country), people)

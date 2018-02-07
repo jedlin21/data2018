@@ -58,16 +58,21 @@ for x in distinct_country_BIG:                                                  
                             WHERE country=(?))""", (x,) )
     how_many = cur.fetchall()
     with_teachers.append(how_many[0][0])
-with_teachers.append(all_teachers - sum(with_teachers))
     #Substract to get others
+with_teachers.append(all_teachers - sum(with_teachers))
+
+
+
+
+
+
+
 
 for x in range(len(country)):
     print(country[x], people[x], with_teachers[x])
     
     
     
-#country.append('Others')
-#people.append(others)
 
 
 
