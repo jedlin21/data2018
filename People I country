@@ -27,7 +27,7 @@ for x in distinct_country:
                             FROM data2018 
                             WHERE country=(?))""", (x) )
     how_many = cur.fetchall()
-    if how_many[0][0] < 100:
+    if how_many[0][0] < 200:
         others += how_many[0][0]
         continue
     country.append(x[0])

@@ -8,6 +8,7 @@ def pie_chart(labels,sizes):
     # Plot
     patches, texts, costam = plt.pie(sizes, labels=labels, colors=colors,
          shadow=True, startangle=140, autopct='%1.1f%%', pctdistance=0.9)
+    plt.legend(patches, labels, loc = "best")
     plt.axis('equal')
     plt.show()
     return 0
