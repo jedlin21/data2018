@@ -1,0 +1,28 @@
+#learner_id  country   in_course   unit   avg_score    completion   inv_rate
+import sqlite3
+
+conn = sqlite3.connect('PearsonData')
+cur = conn.cursor() 
+
+#Give me distinct country
+cur.execute("""SELECT 
+               DISTINCT
+               country FROM data2018
+               ORDER BY country""")
+distinct_country = cur.fetchall()
+if distinct_country[0] == ('',): distinct_country = distinct_country[1:]
+
+
+for x in distinct_country:
+    print(x)
+print(len(distinct_country))
+
+
+for x in distinct_country:
+    cur.execute("""SELECT COUNT(*) 
+                     FROM  (SELECT 
+                            DISTINCT learner_id
+                            FROM data2018 
+                            WHERE country=(?))""", (x) )
+    how_many = cur.fetchall()
+    print(x,how_many)
