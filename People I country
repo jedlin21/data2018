@@ -4,6 +4,10 @@ import sqlite3
 conn = sqlite3.connect('PearsonData')
 cur = conn.cursor() 
 
+country = []
+people = []
+others = 0
+
 #Give me distinct country
 cur.execute("""SELECT 
                DISTINCT
@@ -13,11 +17,8 @@ distinct_country = cur.fetchall()
 if distinct_country[0] == ('',): distinct_country = distinct_country[1:]
 
 
-for x in distinct_country:
-    print(x)
-print(len(distinct_country))
-
-
+#Search for number of people from cuntry X
+#If number < 100 add this to others
 for x in distinct_country:
     cur.execute("""SELECT COUNT(*) 
                      FROM  (SELECT 
@@ -25,4 +26,14 @@ for x in distinct_country:
                             FROM data2018 
                             WHERE country=(?))""", (x) )
     how_many = cur.fetchall()
-    print(x,how_many)
+    if how_many[0][0] < 100:
+        others += how_many[0][0]
+        continue
+    country.append(x[0])
+    people.append(how_many[0][0])
+country.append('Others')
+people.append(others)
+
+
+for x in range(len(country)):
+    print(country[x], people[x])

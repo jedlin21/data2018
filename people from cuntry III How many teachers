@@ -1,0 +1,92 @@
+#learner_id  country   in_course   unit   avg_score    completion   inv_rate
+import sqlite3
+
+conn = sqlite3.connect('PearsonData')
+cur = conn.cursor() 
+
+not_significant_under = 200
+country = []
+people = []
+with_teachers = []
+others = 0
+
+#Give me distinct country
+cur.execute("""SELECT 
+               DISTINCT
+               country FROM data2018
+               ORDER BY country""")
+distinct_country = cur.fetchall()
+if distinct_country[0] == ('',): distinct_country = distinct_country[1:]
+
+
+#Search for number of people from cuntry X
+#If number < 100 add this to others
+for x in distinct_country:
+    cur.execute("""SELECT COUNT(*) 
+                     FROM  (SELECT 
+                            DISTINCT learner_id
+                            FROM data2018 
+                            WHERE country=(?))""", (x) )
+    how_many = cur.fetchall()
+    if how_many[0][0] < not_significant_under:
+        others += how_many[0][0]
+        continue
+    country.append(x[0])
+    people.append(how_many[0][0])
+country.append('Others')
+people.append(others)
+    
+
+
+#Hom many people have teacher
+    #Find all teachers
+cur.execute("""SELECT COUNT(CASE in_course WHEN 't' THEN 1 ELSE null END) 
+                     FROM  (SELECT 
+                            DISTINCT learner_id, in_course
+                            FROM data2018 )""")
+all_teachers = cur.fetchall()[0][0]    
+    
+    
+
+    #Search for numbers of people who use techer in significant countries
+distinct_country_BIG = country[:-1]
+for x in distinct_country_BIG:                                                        #ADD  distinct_country_BIG       
+    cur.execute("""SELECT COUNT(CASE in_course WHEN 't' THEN 1 ELSE null END) 
+                     FROM  (SELECT 
+                            DISTINCT learner_id, in_course
+                            FROM data2018 
+                            WHERE country=(?))""", (x,) )
+    how_many = cur.fetchall()
+    with_teachers.append(how_many[0][0])
+with_teachers.append(all_teachers - sum(with_teachers))
+    #Substract to get others
+
+for x in range(len(country)):
+    print(country[x], people[x], with_teachers[x])
+    
+    
+    
+#country.append('Others')
+#people.append(others)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
