@@ -83,7 +83,7 @@ with_teachers.insert(0,all_teachers)
 
 #Percentage teacher/all learners
 for x in range(len(country)):
-    percentage.append(with_teachers[x] / people[x])
+    percentage.append((with_teachers[x] / people[x])*100)
 
 
 
@@ -91,7 +91,7 @@ for x in range(len(country)):
     print(country[x], people[x], with_teachers[x],percentage[x])
     
     
-bar.bar_chart(country, people, with_teachers)
+bar.bar_chart(country, percentage,"People witch teacher", "Percentage")
 
 
 
