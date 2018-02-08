@@ -91,7 +91,7 @@ for x in range(len(country)):
     print(country[x], people[x], with_teachers[x],percentage[x])
     
     
-bar.bar_chart(country, percentage,"People witch teacher", "Percentage")
+bar.bar_chart(country, percentage,"People witch teacher", "Percentage","int")
 
 
 

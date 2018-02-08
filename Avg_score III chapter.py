@@ -2,7 +2,7 @@
 import sqlite3
 import bar_chart as bar
 
-completion = []
+avg_score = []
 temporary = []
 dist_units = []
 
@@ -38,23 +38,21 @@ temporary.append(distinct_units[16])
 distinct_units  = temporary
 
 for x in distinct_units:    
-    cur.execute("""SELECT AVG(completion) 
+    cur.execute("""SELECT AVG(avg_score) 
                      FROM  (SELECT 
-                            completion
+                            avg_score
                             FROM data2018 
-                            WHERE unit=(?))""", (x) )
+                            WHERE unit=(?) AND completion > 0.2)""", (x) )
     how_many = cur.fetchall()
-    completion.append(how_many[0][0]*100)
+    avg_score.append(how_many[0][0]*100)
     
 for x in distinct_units:
     dist_units.append(x[0])   
-dist_units[12] = 'R_3'
-dist_units[13] = 'R_6'
-dist_units[14] = 'R_9'
-dist_units[15] = 'R_12'
-dist_units[16] = 'PODC'
+dist_units[12] = 'R3'
+dist_units[13] = 'R6'
+dist_units[14] = 'R9'
+dist_units[15] = 'R12'
+dist_units[16] = 'VP'
 
 
-bar.bar_chart(dist_units, completion, "Unit", "Completion", "int")
-
-
+bar.bar_chart(dist_units, avg_score, "Unit", "Avg_score","int")

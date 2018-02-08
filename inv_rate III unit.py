@@ -48,11 +48,11 @@ for x in distinct_units:
     
 for x in distinct_units:
     dist_units.append(x[0])   
-dist_units[12] = 'R_3'
-dist_units[13] = 'R_6'
-dist_units[14] = 'R_9'
-dist_units[15] = 'R_12'
-dist_units[16] = 'PODC'
+dist_units[12] = 'R3'
+dist_units[13] = 'R6'
+dist_units[14] = 'R9'
+dist_units[15] = 'R12'
+dist_units[16] = 'VP'
 
 
 bar.bar_chart(dist_units, inv_rate, "Unit", "Inv_rate", "float")
